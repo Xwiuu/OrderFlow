@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "appDois",
-    "slug": "appDois",
+    "slug": "ordem-servico-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.tiowiu.ordemservicoapp"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +38,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8eeaba87-66d6-4de5-8ce0-3fef927ec276"
+      }
     }
   }
 }

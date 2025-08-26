@@ -1,6 +1,6 @@
-# 🚀 OrderFlow - Nosso Primeiro Aplicativo Móvel!
+# 🚀 OrderFlow - Meu  Primeiro Aplicativo Móvel!
 
-Bem-vindo ao **OrderFlow**! Este é o resultado do nosso primeiro mergulho no mundo do desenvolvimento mobile com Expo e React Native. Um aplicativo simples, mas robusto, feito para gerenciar ordens de serviço.
+Bem-vindo ao **OrderFlow**! Este é o resultado do meu primeiro mergulho no mundo do desenvolvimento mobile com Expo e React Native. Um aplicativo simples, mas robusto, feito para gerenciar ordens de serviço.
 
 ## ✨ Visão Geral do Projeto
 

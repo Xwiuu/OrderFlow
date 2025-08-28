@@ -1,32 +1,24 @@
-// Caminho: src/navigation/CustomTabBar.tsx (VERSÃO FINAL)
+// Caminho: src/navigation/CustomTabBar.tsx (VERSÃO CORRIGIDA)
 
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useRouter, useSegments } from "expo-router";
+import { BottomTabBarProps } from "@react-navigation/bottom-tabs"; // Importação chave
+import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
-// 1. Definimos um "molde" para as props que nossos ícones recebem
-interface IconProps {
-  focused: boolean;
-  color: string;
-  size: number;
-}
 
 const TABS = {
   index: {
     label: "Início",
-    // 2. Usamos o "molde" para dizer ao TypeScript o formato das props
-    icon: (props: IconProps) => (
+    icon: (props: any) => (
       <MaterialCommunityIcons
         name={props.focused ? "view-dashboard" : "view-dashboard-outline"}
-        {...props} // Passamos todas as props (color, size, focused) para o ícone
+        {...props}
       />
     ),
   },
   ordens: {
     label: "Ordens",
-    // 2. Usamos o "molde" aqui também
-    icon: (props: IconProps) => (
+    icon: (props: any) => (
       <Ionicons
         name={props.focused ? "list-circle" : "list-circle-outline"}
         {...props}
@@ -37,17 +29,16 @@ const TABS = {
 
 type TabName = keyof typeof TABS;
 
-export function CustomTabBar() {
-  const segments = useSegments();
+// Agora usamos o tipo `BottomTabBarProps` para que o TypeScript não reclame
+export function CustomTabBar({ state }: BottomTabBarProps) {
   const router = useRouter();
-  // Define a aba ativa baseada no primeiro segmento da URL
-  const activeTab = (segments[0] || "index") as TabName;
+  const activeRoute = state.routes[state.index].name as TabName;
 
   return (
     <View style={styles.tabBarContainer}>
       {Object.keys(TABS).map((name) => {
         const tabName = name as TabName;
-        const isFocused = activeTab === tabName;
+        const isFocused = activeRoute === tabName;
         const color = isFocused ? "#00BFFF" : "gray";
         const Icon = TABS[tabName].icon;
 
@@ -76,7 +67,8 @@ const styles = StyleSheet.create({
     height: 80,
     backgroundColor: "#1e1e1e",
     borderTopWidth: 1,
-    borderTopColor: "#00BFFF",
+    borderTopColor: "#2d2d2d",
+    paddingBottom: 10,
   },
   tabButton: {
     flex: 1,

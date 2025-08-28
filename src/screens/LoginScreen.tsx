@@ -29,7 +29,7 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Stack.Screen options={{ headerShown: false }} />
+      <Stack.Screen options={{ headerShown: true }} />
       <View style={styles.container}>
         <Text style={styles.header}>Bem-vindo!</Text>
         <Text style={styles.subtitle}>Faça login para continuar.</Text>

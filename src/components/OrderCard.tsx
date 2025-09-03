@@ -1,14 +1,9 @@
-// Caminho: src/components/OrderCard.tsx (VERSÃO FINAL ANIMADA)
+// Caminho: src/components/OrderCard.tsx (VERSÃO 100% ATUALIZADA)
 
 import { Link } from "expo-router";
-import React, { useEffect } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withDelay,
-  withTiming,
-} from "react-native-reanimated";
+import { MotiView } from "moti"; // Importamos o MotiView em vez do 'react-native-reanimated'
+import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Order } from "../data/mockOrders";
 
 const statusColors = {
@@ -17,53 +12,53 @@ const statusColors = {
   Concluído: "#32CD32",
 };
 
-const OrderCard = ({ order, index }: { order: Order; index: number }) => {
-  const opacity = useSharedValue(0);
-  const translateY = useSharedValue(25);
-
-  const animatedCardStyle = useAnimatedStyle(() => {
-    return {
-      opacity: opacity.value,
-      transform: [{ translateY: translateY.value }],
-    };
-  });
-
-  useEffect(() => {
-    const delay = index * 100;
-
-    opacity.value = withDelay(delay, withTiming(1, { duration: 400 }));
-    translateY.value = withDelay(delay, withTiming(0, { duration: 400 }));
-  }, [index, opacity, translateY]);
-
+export default function OrderCard({
+  order,
+  index,
+}: {
+  order: Order;
+  index: number;
+}) {
   return (
-    <Animated.View style={animatedCardStyle}>
-      <Link href={`/${order.id}`} asChild>
-        <TouchableOpacity>
-          <View style={styles.cardContainer}>
-            <View
+    // O MotiView simplifica a animação. Não precisamos mais de 'useSharedValue',
+    // 'useAnimatedStyle' ou 'useEffect' para a animação de entrada.
+    <MotiView
+      from={{ opacity: 0, translateY: 50, scale: 0.9 }}
+      animate={{ opacity: 1, translateY: 0, scale: 1 }}
+      transition={{
+        type: "timing",
+        duration: 400,
+        delay: index * 100, // Cada cartão entra com um pequeno atraso
+      }}
+    >
+      <Link
+        href={{ pathname: "/(tabs)/[orderId]", params: { orderId: order.id } }}
+        asChild
+      >
+        <Pressable style={styles.cardContainer}>
+          <View
+            style={[
+              styles.statusIndicator,
+              { backgroundColor: statusColors[order.status] || "gray" },
+            ]}
+          />
+          <View style={styles.contentContainer}>
+            <Text style={styles.clientText}>{order.client}</Text>
+            <Text style={styles.serviceText}>{order.service}</Text>
+            <Text
               style={[
-                styles.statusIndicator,
-                { backgroundColor: statusColors[order.status] },
+                styles.statusText,
+                { color: statusColors[order.status] || "gray" },
               ]}
-            />
-            <View style={styles.contentContainer}>
-              <Text style={styles.clientText}>{order.client}</Text>
-              <Text style={styles.serviceText}>{order.service}</Text>
-              <Text
-                style={[
-                  styles.statusText,
-                  { color: statusColors[order.status] },
-                ]}
-              >
-                {order.status}
-              </Text>
-            </View>
+            >
+              {order.status}
+            </Text>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       </Link>
-    </Animated.View>
+    </MotiView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -73,6 +68,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     flexDirection: "row",
     overflow: "hidden",
+    // Adicionando uma pequena sombra para um efeito mais profissional
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   statusIndicator: {
     width: 6,
@@ -98,5 +99,3 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
 });
-
-export default OrderCard;

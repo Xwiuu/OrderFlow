@@ -1,6 +1,6 @@
-// Caminho: src/screens/OrdersScreen.tsx (VERSÃO ESTILIZADA)
+// Caminho: src/screens/OrdersScreen.tsx (VERSÃO 100% ATUALIZADA)
 
-import { MaterialCommunityIcons } from "@expo/vector-icons"; // Importando ícone
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
 import {
@@ -31,32 +31,30 @@ export default function OrdersScreen() {
       <View style={styles.container}>
         <Text style={styles.header}>Ordens de Serviço</Text>
 
-        {/* Verificação para mostrar a mensagem de lista vazia */}
-        {orders.length === 0 ? (
-          <View style={styles.emptyContainer}>
-            <MaterialCommunityIcons
-              name="clipboard-text-off-outline"
-              size={64}
-              color="#3e3e3e"
-            />
-            <Text style={styles.emptyText}>Nenhuma ordem cadastrada</Text>
-            <Text style={styles.emptySubtext}>
-              {`Clique no botão '+' para criar!`}
-            </Text>
-          </View>
-        ) : (
-          <FlatList
-            data={orders}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item, index }) => (
-              <OrderCard order={item} index={index} />
-            )}
-            contentContainerStyle={{ paddingBottom: 80 }}
-          />
-        )}
+        <FlatList
+          data={orders}
+          keyExtractor={(item) => item.id}
+          // A única mudança está aqui: passamos o `index` para o OrderCard
+          renderItem={({ item, index }) => (
+            <OrderCard order={item} index={index} />
+          )}
+          contentContainerStyle={{ paddingBottom: 100 }} // Aumentamos o espaço para o FAB
+          ListEmptyComponent={
+            <View style={styles.emptyContainer}>
+              <MaterialCommunityIcons
+                name="clipboard-text-off-outline"
+                size={64}
+                color="#3e3e3e"
+              />
+              <Text style={styles.emptyText}>Nenhuma ordem cadastrada</Text>
+              <Text style={styles.emptySubtext}>
+                {`Clique no botão '+' para criar!`}
+              </Text>
+            </View>
+          }
+        />
 
-        {/* O botão flutuante continua aqui */}
-        <Link href="/new-order" asChild>
+        <Link href="/(tabs)/new-order" asChild>
           <TouchableOpacity style={styles.fab}>
             <Text style={styles.fabText}>+</Text>
           </TouchableOpacity>
@@ -76,18 +74,18 @@ const styles = StyleSheet.create({
   },
   container: { flex: 1, paddingHorizontal: 8 },
   header: {
-    color: "#161616",
+    color: "white", // Corrigido para ser visível no fundo escuro
     fontSize: 36,
     fontWeight: "bold",
     paddingHorizontal: 8,
     paddingVertical: 16,
   },
-  // ESTILOS PARA A MENSAGEM DE LISTA VAZIA
   emptyContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 60, // Para dar espaço para o FAB
+    paddingBottom: 60,
+    marginTop: "30%", // Para centralizar melhor
   },
   emptyText: {
     color: "#a0a0a0",
@@ -113,10 +111,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 8,
+    // Sombra para iOS
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
   fabText: {
     fontSize: 30,
-    color: "#121212",
-    fontWeight: "bold",
+    color: "white", // Corrigido para melhor contraste
   },
 });

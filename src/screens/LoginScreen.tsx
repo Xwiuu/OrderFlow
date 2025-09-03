@@ -1,8 +1,10 @@
-// Caminho: src/screens/LoginScreen.tsx
-import { Stack } from "expo-router";
+// Caminho: src/screens/LoginScreen.tsx (VERSÃO FINAL E CORRETA)
+
+import { Link, Stack } from "expo-router"; // Adicionado Link
 import React, { useState } from "react";
 import {
   Alert,
+  Pressable,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -59,6 +61,16 @@ export default function LoginScreen() {
             {loading ? "Entrando..." : "Entrar"}
           </Text>
         </TouchableOpacity>
+
+        {/* Link para a tela de cadastro */}
+        <Link href="/register" asChild>
+          <Pressable style={styles.registerButton}>
+            <Text style={styles.registerText}>
+              Não tem uma conta?{" "}
+              <Text style={styles.registerLink}>Cadastre-se</Text>
+            </Text>
+          </Pressable>
+        </Link>
       </View>
     </SafeAreaView>
   );
@@ -97,4 +109,18 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   buttonText: { color: "#FFFFFF", fontSize: 16, fontWeight: "bold" },
+
+  // Estilos para o link de cadastro
+  registerButton: {
+    marginTop: 20,
+    alignItems: "center",
+  },
+  registerText: {
+    fontSize: 16,
+    color: "gray",
+  },
+  registerLink: {
+    fontWeight: "bold",
+    color: "#007AFF",
+  },
 });

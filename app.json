@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "appDois",
+    "name": "OrderFlow",
     "slug": "ordem-servico-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,7 +14,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#121212"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.tiowiu.ordemservicoapp"
